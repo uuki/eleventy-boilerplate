@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="{{lang}}">
+<head>
+  {{> meta/_resource_hints}}
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>{{ title }}</title>
+  <meta name="description" content="{{ description }}">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="format-detection" content="telephone=no, address=no, email=no">
+  {{{bundledCss}}}
+  {{{bundledJs}}}
+  {{> meta/_ogp}}
+</head>
+
+<body>
+  {{> partials/_header}}
+
+  <main>
+    {{{content}}}
+  </main>
+
+  {{> partials/_footer}}
+</body>
+</html>
