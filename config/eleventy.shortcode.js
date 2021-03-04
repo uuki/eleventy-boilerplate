@@ -64,7 +64,7 @@ const generateImage = async (src, alt) => {
   }
 
   Image.concurrency = 10
-  const options = customOptions.plugin.eleventyImg()
+  const options = customOptions.plugin.eleventyImg({ src })
   const resolveSrcPath = path.join(
     customDir.src,
     customDir.assets,

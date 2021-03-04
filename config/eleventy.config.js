@@ -55,18 +55,23 @@ const customOptions = {
     },
   },
   plugin: {
-    eleventyImg: (context = {}) => ({
-      widths: context.widths || [null],
-      formats: ['webp', null],
-      urlPath: '/dist/assets/img/',
-      outputDir: './dist/assets/img/',
-      useCache: true,
-      filenameFormat: function (id, src, width, format, options) {
-        const extension = path.extname(src)
-        const basename = path.basename(src, extension)
-        return `${basename}.${format}`
-      },
-    }),
+    eleventyImg: (context = {}) => {
+      const { src } = context
+      const dirName = path.dirname(src || '').replace('.', '')
+
+      return {
+        widths: context.widths || [null],
+        formats: ['webp', null],
+        urlPath: `/dist/assets/img/${dirName}`,
+        outputDir: `./dist/assets/img/${dirName}`,
+        useCache: true,
+        filenameFormat: function (id, src, width, format, options) {
+          const extension = path.extname(src)
+          const basename = path.basename(src, extension)
+          return `${basename}.${format}`
+        },
+      }
+    },
   },
 }
 
