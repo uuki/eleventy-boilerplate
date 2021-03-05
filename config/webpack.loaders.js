@@ -1,6 +1,8 @@
 const env = require('./env')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const sourceMap = env.isDev
+const { customOptions } = require('./eleventy.config')
+const dir = customOptions.dir
 
 // Javascript loaders
 const js = {
@@ -60,4 +62,45 @@ const sass = {
   ],
 }
 
-module.exports = [js, sassPre, sass]
+// Image loaders
+const imageLoader = {
+  loader: 'image-webpack-loader',
+  options: {
+    bypassOnDebug: true,
+    gifsicle: {
+      interlaced: false,
+    },
+    optipng: {
+      optimizationLevel: 7,
+    },
+    pngquant: {
+      quality: '65-90',
+      speed: 4,
+    },
+    mozjpeg: {
+      progressive: true,
+    },
+    webp: {
+      quality: 75,
+    },
+  },
+}
+
+const images = {
+  test: /\.(gif|png|jpe?g|svg)$/i,
+  exclude: /fonts/,
+  use: [
+    {
+      loader: 'file-loader',
+      options: {
+        name: '[path][name].[ext]',
+        outputPath: (url, resourcePath, context) => {
+          return url.replace(`${dir.src}/${dir.assets}/`, '')
+        },
+      },
+    },
+    env.isDev ? imageLoader : null,
+  ].filter(Boolean),
+}
+
+module.exports = [js, sassPre, sass, images]

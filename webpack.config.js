@@ -9,6 +9,7 @@ const customDir = customOptions.dir
 const entryBaseName = customOptions.entry.basename
 
 module.exports = {
+  mode: env.isDev ? 'development' : 'production',
   entry: {
     [entryBaseName]: path.resolve(
       __dirname,
@@ -46,5 +47,8 @@ module.exports = {
     colors: {
       green: '\u001b[32m',
     },
+  },
+  watchOptions: {
+    ignored: /node_modules/,
   },
 }
